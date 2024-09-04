@@ -30,8 +30,34 @@ namespace MarkdownToNexusModsTests
             Run(input, expected);
 		}
 
+        [Fact]
+        public void TableColumnMissing_RendersEmpty_Success()
+        {
+            string input = @"
+|Test|Test 2|Test 3|
+|--|--|--|
+|Some Value||Other other value|
+|Foo Value|Foo 2 Other value|Foo 3 ........... Other other value |
+";
 
-		[Fact]
+            string expected =
+"""
+[font=Courier New]+------------+-------------------+-------------------------------------+
+| Test       | Test 2            | Test 3                              |
+|============+===================+=====================================|
+| Some Value |                   | Other other value                   |
+|------------+-------------------+-------------------------------------|
+| Foo Value  | Foo 2 Other value | Foo 3 ........... Other other value |
++------------+-------------------+-------------------------------------+
+[/font]
+
+""";
+
+            Run(input, expected);
+        }
+
+
+        [Fact]
 		public void DynamicWidthTable_NoOuterPipes_Success()
 		{
 			string input = @"

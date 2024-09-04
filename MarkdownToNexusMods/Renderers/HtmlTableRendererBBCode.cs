@@ -48,13 +48,8 @@ public class HtmlTableRendererBBCode : HtmlObjectRenderer<MDT.Table>
                 {
                     var cellObj = row[i];
                     var cell = (TableCell)cellObj;
-
-                    var text = (cell.FirstOrDefault() as ParagraphBlock)?.Inline?.FirstChild?.ToString();
-
-                    if(text is null)
-                    {
-                        throw new ApplicationException($"Table column could not be read at {cell.Span}");
-                    }
+                    
+                    var text = (cell.FirstOrDefault() as ParagraphBlock)?.Inline?.FirstChild?.ToString() ?? "";
 
                     rowText.Add(text);
                 }
