@@ -21,7 +21,7 @@ namespace MarkdownToNexusModsTests
 
 			string expected = @" 
 (test)[./some place/ >~]
-";
+".Replace("\r\n", "\n");
 
 			Run(input, expected);
 

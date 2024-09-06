@@ -20,7 +20,7 @@ namespace MarkdownToNexusModsTests
 			Run(input, expected);
 		}
 
-		[Fact]
+        [Fact]
 		public void Link_Relative_NoBaseUriProvided_ReturnsAbsoluteUri()
 		{
 			string input = @"[test](https://whatever/foo1/foo2)";
@@ -32,12 +32,12 @@ namespace MarkdownToNexusModsTests
 			Run(input, expected);
 		}
 		[Fact]
-		public void Link_SameTextAsUri_ConvertedToPlainLinkText()
+		public void Link_SameTextAsUri__Creates_Link_With_text__Success()
 		{
 			string input = @"[https://whatever/foo1/foo2](https://whatever/foo1/foo2)";
 
 			string expected = @" 
-https://whatever/foo1/foo2
+[url=https://whatever/foo1/foo2]https://whatever/foo1/foo2[/url]
 ";
 
 			Run(input, expected);
@@ -141,16 +141,15 @@ https://whatever/foo1/foo2
 		}
 
 		[Fact]
-		public void Link_DocumentReference_ChangeToLinkText_Success()
+		public void Link_DocumentReference_ChangeToFontLinkText_Success()
 		{
 			string input = @"test
 See [Settings](#settings) below.
 Some other text";
 
-
-			string expected = @" 
+            string expected = @" 
 test
-See Settings below.
+See [font=Courier New]Settings[/font] below.
 Some other text
 ";
 

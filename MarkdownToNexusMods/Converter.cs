@@ -65,6 +65,7 @@ namespace MarkdownToNexusMods
             stringWriter.Flush();
 
 			string output = sb.ToString();
+
 			//The Nexus Mods editor will always trim multiple new lines when pasting in the WYSIYG mode.
 			//A trick is to prefix every empty line with a space.
 			output = Regex.Replace(output, "^\n", " \n", RegexOptions.Multiline);

@@ -38,7 +38,10 @@ public class LinkInlineRendererBbCode : HtmlObjectRenderer<LinkInline>
 			return;
         }
 
-        if(BaseUri != null)
+
+        bool isDocumentLink = uriString.Trim().StartsWith("#");
+
+        if(isDocumentLink == false && BaseUri != null)
         {
             if(Uri.TryCreate(BaseUri, link.Url, out Uri? absoluteUri))
             {
@@ -49,7 +52,7 @@ public class LinkInlineRendererBbCode : HtmlObjectRenderer<LinkInline>
                 throw new ApplicationException($"Unable to convert link to absolute link: '{link.Url}");
             }
         }
-
+        
         string? linkLiteralText = GetLinkText(link);
 
         if (!link.IsImage)
@@ -57,16 +60,15 @@ public class LinkInlineRendererBbCode : HtmlObjectRenderer<LinkInline>
             //Plain text link conversion
             if (link.Url == linkLiteralText)
             {
-                //Do not encode as [url] if this is a plain link.
-                //This allows the user to declare if they want a [url] or not.
-                renderer.Write(uriString);
+                //Use the link as the text and the link as NexusMods formats it differently.
+                renderer.Write($"[url={uriString}]{uriString}[/url]");
                 return;
             }
 
             //Render document referencing link as simple text
-            if (link.Url.StartsWith("#"))
+            if (isDocumentLink)
             {
-                renderer.Write(linkLiteralText);
+                renderer.Write($"[font=Courier New]{linkLiteralText}[/font]");
                 return;
             }
         }

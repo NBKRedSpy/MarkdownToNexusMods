@@ -33,9 +33,47 @@ Important! The resulting text must be pasted into the Nexus Mod's editor in WYSI
 
 # NexusMods Formatting Differences
 
+## Issue: Lists with New Lines Break
+
+If a Markdown list has line breaks between them, the BBCode will move the item to a new line.
+This includes if *any* of the list items have a new line.  
+
+Fix is to remove the new lines, or manually remove the output's extra lines.
+
+Markdown Example:  
+```
+* Foo
+
+* Bar
+```
+
+BBCode result:
+```
+* 
+Foo
+
+* 
+Bar
+```
+
+Fix: Change Markdown to:
+```
+* Foo
+* Bar
+```
+
 ## Inline Code Blocks
 
 Markdown inline code blocks are rendered in the "Courier New" font since NexusMods only supports multiline code blocks.
+
+## Document Section Links
+
+Links that start with a `#` are links to the document's sections.  The text for these sections will be set to the courier font, similar to the inline code formatting.
+In the markdown, it is recommended to use the section name for the text instead of something like 'here'.
+
+For example:  ```See the [foo](#foo) section.```
+
+Instead of: ```Go [here](#foo).```
 
 ## Relative Image Links
 Image links can be processes in a couple of ways:
@@ -58,15 +96,6 @@ Markdown image relative link:
 
 BBCode Result:
 ```[img]https://raw.githubusercontent.com/SomeUser/SomeRepo/master/media/Example%20Diagram.png[/img]```
-
-
-
-## Plain Links
-A link which is either plain text or use the same text for the link and the literal will not be rendered as a NexusMods `[url]` tag.
-
-For example, ```https://example.com``` and ```(https://example.com)[https://example.com]``` will both be rendered as ```https://example.com```
-
-There is no visual or functional difference in the NexusMods translation.
 
 # Additional Elements
 If there is a Markdown element that is not translated, feel free to create an issue or contribute to this repo.
